@@ -1,21 +1,14 @@
 # AshTable
 
-**TODO: Add description**
+This is a sortable, paginated table component for Ash resources or queries
 
-## Installation
+## Status
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ash_table` to your list of dependencies in `mix.exs`:
+- [X] Sort by attribute
+- [X] Sort by relation (using function passed to column)
+- [] Pagination
 
-```elixir
-def deps do
-  [
-    {:ash_table, "~> 0.1.0"}
-  ]
-end
-```
+## Usage
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/ash_table>.
+See the test_bed folder for an example with tests
 
