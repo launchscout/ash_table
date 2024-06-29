@@ -1,3 +1,4 @@
+<div>
 <table>
   <%= if assigns[:caption] do %>
     <caption id="caption"><%= @caption %></caption>
@@ -18,7 +19,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= for row <- @rows do %>
+    <%= for row <- rows_from(@results) do %>
       <tr class={assigns[:row_class]}>
         <%= for col <- @col, Map.get(col, :when, true) do %>
           <td class={assigns[:cell_class]}>
@@ -29,4 +30,6 @@
     <% end %>
   </tbody>
 </table>
+<TableHelpers.paginator target={@myself} :if={assigns[:limit]} results={@results}/>
+</div>
   

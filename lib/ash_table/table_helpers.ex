@@ -30,6 +30,14 @@ defmodule AshTable.TableHelpers do
     """
   end
 
+  def paginator(assigns) do
+    ~H"""
+    <button :if={@results.offset > 0} phx-click="set_page" phx-value-offset={@results.offset - @results.limit} phx-target={@target}>Previous</button>
+    <div :if={@results}>Viewing <%= @results.offset + 1 %> to <%= @results.offset + @results.limit %></div>
+    <button :if={@results.more?} phx-click="set_page" phx-value-offset={@results.offset + @results.limit} phx-target={@target}>Next</button>
+    """
+  end
+
   defp sort_direction(column, sort) do
     with %{sort_key: column_key} when is_binary(column_key) <- column,
          {^column_key, direction} <- sort do

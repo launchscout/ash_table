@@ -10,7 +10,7 @@ defmodule TestBed.BlogLive.IndexTest do
     Blog.create_post!(%{title: "Zazzle"})
     Blog.create_post!(%{title: "Bubble"})
 
-    {:ok, view, html} = live(conn, ~p"/posts")
+    {:ok, view, _html} = live(conn, ~p"/posts")
 
     view
     |> element(~s/th button[phx-value-column="title"]/)
@@ -28,7 +28,7 @@ defmodule TestBed.BlogLive.IndexTest do
     Blog.create_post!(%{author_id: author2.id, title: "Wutter"})
     Blog.create_post!(%{author_id: author3.id, title: "Wuttest"})
 
-    {:ok, view, html} = live(conn, ~p"/posts")
+    {:ok, view, _html} = live(conn, ~p"/posts")
 
     view
     |> element(~s/th button[phx-value-column="author.name"]/)
@@ -37,4 +37,17 @@ defmodule TestBed.BlogLive.IndexTest do
     assert has_element?(view, ~s/table tr:first-child/, "Bob")
   end
 
+  test "pagination", %{conn: conn} do
+    for i <- 0..20 do
+      Blog.create_post!(%{title: "Post #{i}"})
+    end
+
+    {:ok, view, html} = live(conn, ~p"/posts")
+
+    assert html =~ "1 to 10"
+
+    view
+    |> element(~s/[phx-click="set_page"]/)
+    |> render_click() =~ "11 to 20"
+  end
 end

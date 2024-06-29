@@ -23,6 +23,8 @@ defmodule AshTable.Table do
     :sort,
     :query,
     :col,
+    :offset,
+    :limit
   ]
 
   @type sort :: {atom | nil, :asc | :desc}
@@ -30,9 +32,7 @@ defmodule AshTable.Table do
   @impl true
   def mount(socket) do
     socket
-    |> assign(
-      sort: {nil, :asc}
-    )
+    |> assign(sort: {nil, :asc})
     |> then(&{:ok, &1})
   end
 
@@ -41,17 +41,25 @@ defmodule AshTable.Table do
     socket
     |> assign(Map.take(assigns, @assigns))
     |> assign(:query, assigns.query)
-    |> load_rows()
+    |> fetch_data()
     |> then(&{:ok, &1})
   end
 
-  defp load_rows(%{assigns: %{query: query, sort: sort, col: columns}} = socket) do
-    rows = query |> apply_sort(sort, columns) |> Ash.read!()
-    assign(socket, :rows, rows)
+  defp fetch_data(
+         %{assigns: %{query: query, sort: sort, col: columns, limit: limit, offset: offset}} =
+           socket
+       ) do
+    results =
+      query |> apply_sort(sort, columns) |> Ash.read!(page: [limit: limit, offset: offset])
+
+    assign(socket, :results, results)
   end
+
+  defp rows_from(%Ash.Page.Offset{results: results}), do: results
 
   defp apply_sort(query, {sort_key, direction}, columns) do
     col = columns |> Enum.find(&(&1[:sort_key] == sort_key))
+
     case col do
       %{apply_sort: apply_sort} when is_function(apply_sort) -> apply_sort.(query, direction)
       _ -> Ash.Query.sort(query, {String.to_existing_atom(sort_key), direction})
@@ -69,7 +77,14 @@ defmodule AshTable.Table do
 
     socket
     |> assign(sort: sort)
-    |> load_rows()
+    |> fetch_data()
+    |> then(&{:noreply, &1})
+  end
+
+  def handle_event("set_page", %{"offset" => offset}, socket) do
+    socket
+    |> assign(offset: String.to_integer(offset))
+    |> fetch_data()
     |> then(&{:noreply, &1})
   end
 
