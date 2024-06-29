@@ -39,7 +39,9 @@ defmodule TestBedWeb.PostsLive.Index do
 end
 ```
 
-In this case the `TestBed.Blog.Post` resource has a title, content, and belongs to Author which has a name. The table is paginated, and sortable by Title and Author name. Note use of the `apply_sort` being passed into the `:col`. This is needed for sorting by related properties due to how Ash works, or til I better understand it and find a simpler way :)
+In this case the `TestBed.Blog.Post` resource has a title, content, and belongs to Author which has a name. The table is paginated, and sortable by Title and Author name. 
+
+Note use of the `apply_sort` being passed into the `:col`. This is needed for sorting by related properties due to how Ash works, or til I better understand it and find a simpler way :) The `sort_key` assign is still required so that the correct column is identified when the sort event fires.
 
 ## Running the test_bed example project
 
@@ -50,3 +52,6 @@ mix ash.setup
 mix phx.server
 ```
 
+## Future
+
+Currently there is very little styling. The goal would be to allow a good default, but great flexiblity. Harcoding a dependency on Tailwind or other css frameworks is not desirable, but allowing the user to decide to use one would be great.
