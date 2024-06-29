@@ -53,7 +53,7 @@ defmodule AshTable.Table do
   defp apply_sort(query, {sort_key, direction}, columns) do
     col = columns |> Enum.find(&(&1[:sort_key] == sort_key))
     case col do
-      %{sort_fn: sort_fn} when is_function(sort_fn) -> sort_fn.(query, direction)
+      %{apply_sort: apply_sort} when is_function(apply_sort) -> apply_sort.(query, direction)
       _ -> Ash.Query.sort(query, {String.to_existing_atom(sort_key), direction})
     end
   end

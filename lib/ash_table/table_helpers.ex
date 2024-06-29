@@ -9,7 +9,7 @@ defmodule AshTable.TableHelpers do
       role="columnheader"
       aria-sort={sort_class(@column, @sort)}
       width={if @column[:min], do: "1px"}
-      class={if @column[:centered], do: "u-text--centered"}
+      class={if @column[:header_class], do: @column[:header_class]}
     >
       <%= render_slot(@inner_block) %>
     </th>

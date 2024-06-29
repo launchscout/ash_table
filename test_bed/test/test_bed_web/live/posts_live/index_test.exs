@@ -1,4 +1,4 @@
-defmodule TestBed.EngagementsLive.IndexTest do
+defmodule TestBed.BlogLive.IndexTest do
   use TestBedWeb.ConnCase
 
   import Phoenix.LiveViewTest
@@ -19,22 +19,22 @@ defmodule TestBed.EngagementsLive.IndexTest do
     assert has_element?(view, ~s/table tr:first-child/, "Bubble")
   end
 
-  # test "sort by client name", %{conn: conn} do
-  #   client1 = Engagements.create_client!(%{name: "Poo"})
-  #   client2 = Engagements.create_client!(%{name: "Yap"})
-  #   client3 = Engagements.create_client!(%{name: "Bob"})
+  test "sort by author name", %{conn: conn} do
+    author1 = Blog.create_author!(%{name: "Poo"})
+    author2 = Blog.create_author!(%{name: "Yap"})
+    author3 = Blog.create_author!(%{name: "Bob"})
 
-  #   Engagements.create_engagement!(%{client_id: client1.id, name: "Wut"})
-  #   Engagements.create_engagement!(%{client_id: client2.id, name: "Wutter"})
-  #   Engagements.create_engagement!(%{client_id: client3.id, name: "Wuttest"})
+    Blog.create_post!(%{author_id: author1.id, title: "Wut"})
+    Blog.create_post!(%{author_id: author2.id, title: "Wutter"})
+    Blog.create_post!(%{author_id: author3.id, title: "Wuttest"})
 
-  #   {:ok, view, html} = live(conn, ~p"/engagements")
+    {:ok, view, html} = live(conn, ~p"/posts")
 
-  #   view
-  #   |> element(~s/th button[phx-value-column="client.name"]/)
-  #   |> render_click()
+    view
+    |> element(~s/th button[phx-value-column="author.name"]/)
+    |> render_click()
 
-  #   assert has_element?(view, ~s/table tr:first-child/, "Bob")
-  # end
+    assert has_element?(view, ~s/table tr:first-child/, "Bob")
+  end
 
 end
