@@ -6,7 +6,7 @@ This is a sortable, paginated table component for Ash resources or queries
 
 - [X] Sort by attribute
 - [X] Sort by relation (using function passed to column)
-- [] Pagination
+- [ ] Pagination
 
 ## Usage
 
