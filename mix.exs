@@ -29,7 +29,8 @@ defmodule AshTable.MixProject do
       {:phoenix_live_view, "~> 0.20.2"},
       {:ash, "~> 3.0"},
       {:ash_postgres, "~> 2.0"},
-      {:ash_phoenix, "~> 2.0"}
+      {:ash_phoenix, "~> 2.0"},
+      {:ex_doc, ">= 0.0.0"}
     ]
   end
 end
