@@ -6,6 +6,7 @@ defmodule AshTable.MixProject do
       app: :ash_table,
       version: "0.1.0",
       elixir: "~> 1.14",
+      description: "A sortable, paginated table as a LiveView component, that integrates with Ash",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: [
