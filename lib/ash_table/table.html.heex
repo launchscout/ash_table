@@ -1,0 +1,36 @@
+<div>
+  <div class="table__wrapper">
+    <table>
+      <%= if assigns[:caption] do %>
+        <caption id="caption"><%= @caption %></caption>
+      <% end %>
+      <thead>
+        <tr>
+          <%= for col <- @col, Map.get(col, :when, true) do %>
+            <%= if Map.has_key?(col, :sort_key) do %>
+              <TableHelpers.column_header column={col} sort={@sort}>
+                <TableHelpers.sort_button target={@myself} column={col} sort={@sort} />
+              </TableHelpers.column_header>
+            <% else %>
+              <TableHelpers.column_header column={col} sort={@sort}>
+                <%= col.label %>
+              </TableHelpers.column_header>
+            <% end %>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for row <- @rows do %>
+          <tr>
+            <%= for col <- @col, Map.get(col, :when, true) do %>
+              <td>
+                <%= render_slot(col, row) %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= if(assigns[:placeholder] && !Enum.any?(@rows), do: render_slot(assigns[:placeholder])) %>
+</div>
