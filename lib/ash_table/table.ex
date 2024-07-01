@@ -11,10 +11,14 @@ defmodule AshTable.Table do
     * `id` - necessary, as this is a stateful LiveView component
     * `query` - An Ash Query or Resource module
     * `sort` (optional) - a `t:sort/0` specifying the initial sort direction
+    * `limit` - page size
+    * `offset` - initial offset for pagination
     * `col` columns
       * attribute - the field this column displays, used to sort
       * apply_sort - optional arity 2 function which takes query, direction as args
     * `caption` (optional)
+    * `read_options` - an options keyword list of options that will be passed into `Ash.read` when data is fetched.
+    This allows for specifying `:tenant`, `:actor`, etc.
 
   """
 
