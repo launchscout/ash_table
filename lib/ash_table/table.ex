@@ -24,8 +24,15 @@ defmodule AshTable.Table do
     :query,
     :col,
     :offset,
-    :limit
+    :limit,
+    :read_options
   ]
+
+  @default_assigns %{
+    limit: 10,
+    offset: 0,
+    read_options: []
+  }
 
   @type sort :: {atom | nil, :asc | :desc}
 
@@ -39,18 +46,32 @@ defmodule AshTable.Table do
   @impl true
   def update(assigns, socket) do
     socket
-    |> assign(Map.take(assigns, @assigns))
+    |> assign(apply_defaults(assigns))
     |> assign(:query, assigns.query)
     |> fetch_data()
     |> then(&{:ok, &1})
   end
 
+  defp apply_defaults(assigns) do
+    @default_assigns |> Map.merge(Map.take(assigns, @assigns))
+  end
+
   defp fetch_data(
-         %{assigns: %{query: query, sort: sort, col: columns, limit: limit, offset: offset}} =
-           socket
+         %{
+           assigns: %{
+             query: query,
+             sort: sort,
+             col: columns,
+             limit: limit,
+             offset: offset,
+             read_options: read_options
+           }
+         } = socket
        ) do
     results =
-      query |> apply_sort(sort, columns) |> Ash.read!(page: [limit: limit, offset: offset])
+      query
+      |> apply_sort(sort, columns)
+      |> Ash.read!(Keyword.merge(read_options, page: [limit: limit, offset: offset]))
 
     assign(socket, :results, results)
   end

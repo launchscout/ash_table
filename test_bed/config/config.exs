@@ -23,7 +23,7 @@ config :test_bed, TestBedWeb.Endpoint,
   live_view: [signing_salt: "oMtOzrbs"]
 
 config :test_bed,
-  ash_domains: [TestBed.Blog]
+  ash_domains: [TestBed.Blog, TestBed.Customers]
 
 # Configures the mailer
 #

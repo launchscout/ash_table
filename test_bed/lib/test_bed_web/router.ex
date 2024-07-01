@@ -20,6 +20,7 @@ defmodule TestBedWeb.Router do
     get "/", PageController, :home
 
     live "/posts", PostsLive.Index
+    live "/customers", CustomersLive.Index
   end
 
   # Other scopes may use custom stacks.
