@@ -9,3 +9,8 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias TestBed.Blog
+for i <- 0..30 do
+  Blog.create_post(%{title: Faker.Lorem.sentence(3), author: %{name: Faker.Person.name()}})
+end

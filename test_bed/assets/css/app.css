@@ -2,4 +2,18 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+th[aria-sort="desc"] button::after {
+  content: "▼";
+  color: currentcolor;
+  font-size: 100%;
+  top: 0;
+}
+
+th[aria-sort="asc"] button::after {
+  content: "▲";
+  color: currentcolor;
+  font-size: 100%;
+  top: 0;
+}
+
 /* This file is for your main application CSS */

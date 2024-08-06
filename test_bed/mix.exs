@@ -64,6 +64,8 @@ defmodule TestBed.MixProject do
       {:ash_phoenix, "~> 2.0"},
       {:ash_authentication, "~> 4.0"},
       {:ash_authentication_phoenix, "~> 2.0"},
+      {:smokestack, "~> 0.6.1-rc.2"},
+      {:faker, ">= 0.0.0"},
       {:ash_table, path: ".."}
     ]
   end

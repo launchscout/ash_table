@@ -21,8 +21,13 @@ defmodule TestBed.Blog.Post do
     defaults([:read, :destroy])
 
     create :create do
+
       # accept title as input
       accept([:title, :author_id])
+
+      argument :author, :map
+
+      change manage_relationship(:author, type: :create)
     end
 
     update :update do

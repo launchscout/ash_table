@@ -19,6 +19,7 @@ defmodule TestBed.Blog.Author do
     defaults([:read, :destroy])
 
     create :create do
+      primary? true
       # accept title as input
       accept([:name])
     end
